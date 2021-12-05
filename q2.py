@@ -19,9 +19,16 @@ df = spark.read.option("header",True)\
 df = df.na.drop(subset=["Price Range"])
 df.printSchema()
 feature_group = ["Price Range", "City"]
-maxSet = df.groupBy(feature_group).agg({"Rating": "max"}).withColumn("dummy", lit("dummmy"))
-df_join = maxSet.join(df, on=['Price Range', "City"], how='left')
-df_join.drop_duplicates(["City","Price Range"]).show()
+maxSet = df.groupBy(feature_group).agg({"Rating": "max"}).withColumn("Rating", col("max(Rating)"))
+# maxSet.show()
+minSet = df.groupBy(feature_group).agg({"Rating": "min"}).withColumn("Rating", col("min(Rating)"))
+
+unionDf = maxSet.union(minSet)
+# unionDf.show()
+
+df_join = unionDf.join(df, on=["Price Range", "City", "Rating"], how='inner')
+# df_join.sort(asc("City")).show()
+df_join.sort(asc("City")).dropDuplicates(["Price Range", "City", "Rating"]).show()
 # joinedMax = df.join(maxSet,feature_group).dropDuplicates().show()
 
 # df_agg = df.groupby('date').agg(F.max('close').alias('close_agg')).withColumn("dummy",F.lit("dummmy")) # dummy column is needed as a workaround in spark issues of self join
