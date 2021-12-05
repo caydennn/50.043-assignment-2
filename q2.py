@@ -35,5 +35,5 @@ df_join.show()
 
 # df_agg = df.groupby('date').agg(F.max('close').alias('close_agg')).withColumn("dummy",F.lit("dummmy")) # dummy column is needed as a workaround in spark issues of self join
 # df_join = df.join(df_agg,on='date',how='left')
-df_join.write.csv("hdfs://%s:9000/assignment2/output/question2/TA_restaurants_curated_cleaned.csv" % (hdfs_nn))
+df_join.write.csv("hdfs://%s:9000/assignment2/output/question2/" % (hdfs_nn), header=True)
 print("CSV Written")

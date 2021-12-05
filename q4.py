@@ -30,5 +30,5 @@ df2 = df2.select(df2.Name,df2.City,explode(df2.csstyle))
 
 df2 = df2.groupBy(["City", "col"]).agg(count("Name")).sort("City")
 df2.show()
-df2.write.csv("hdfs://%s:9000/assignment2/output/question4/TA_restaurants_curated_cleaned.csv" % (hdfs_nn))
+df2.write.csv("hdfs://%s:9000/assignment2/output/question4/" % (hdfs_nn), header=True)
 print("CSV Written")

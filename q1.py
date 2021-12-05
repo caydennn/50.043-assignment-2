@@ -26,5 +26,5 @@ df = df.filter(length('Reviews') > 14).filter(col("Rating") >= 1.0)
 # The sanity check is done by checking the group by of the number of reviews 
 df.groupBy('Reviews').agg({'Reviews': 'count'}).sort(desc("count(Reviews)")).show()
 
-df.write.csv("hdfs://%s:9000/assignment2/output/question1/TA_restaurants_curated_cleaned.csv" % (hdfs_nn))
+df.write.csv("hdfs://%s:9000/assignment2/output/question1/" % (hdfs_nn), header=True)
 print("CSV Written")
