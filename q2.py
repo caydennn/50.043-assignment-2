@@ -28,8 +28,12 @@ unionDf = maxSet.union(minSet)
 
 df_join = unionDf.join(df, on=["Price Range", "City", "Rating"], how='inner')
 # df_join.sort(asc("City")).show()
-df_join.sort(asc("City")).dropDuplicates(["Price Range", "City", "Rating"]).show()
+df_join = df_join.sort(asc("City")).dropDuplicates(["Price Range", "City", "Rating"])
+
+df_join.show()
 # joinedMax = df.join(maxSet,feature_group).dropDuplicates().show()
 
 # df_agg = df.groupby('date').agg(F.max('close').alias('close_agg')).withColumn("dummy",F.lit("dummmy")) # dummy column is needed as a workaround in spark issues of self join
 # df_join = df.join(df_agg,on='date',how='left')
+df_join.write.csv("hdfs://%s:9000/assignment2/output/question2/TA_restaurants_curated_cleaned.csv" % (hdfs_nn))
+print("CSV Written")

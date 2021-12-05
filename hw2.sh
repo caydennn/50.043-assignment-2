@@ -16,17 +16,17 @@ hdfs dfs -put ./data/TA_restaurants_curated_cleaned.csv /assignment2/part1/input
 # hdfs dfs -rm -r /assignment2/output/question1
 # spark-submit q1.py $hdfs_namenode 
 
-echo "question 2" 
-hdfs dfs -rm -r /assignment2/output/question2
-spark-submit q2.py $hdfs_namenode 
+# echo "question 2" 
+# hdfs dfs -rm -r /assignment2/output/question2
+# spark-submit q2.py $hdfs_namenode 
 
 # echo "question 3" 
 # hdfs dfs -rm -r /assignment2/output/question3
 # spark-submit q3.py $hdfs_namenode 
 
-# echo "question 4"
-# hdfs dfs -rm -r /assignment2/output/question4
-# spark-submit q4.py $hdfs_namenode 
+echo "question 4"
+hdfs dfs -rm -r /assignment2/output/question4
+spark-submit q4.py $hdfs_namenode 
 
 # echo "part2"
 # hdfs dfs -rm -r /assignment2/part2/
