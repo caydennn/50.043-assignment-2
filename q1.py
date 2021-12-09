@@ -8,6 +8,7 @@ from pyspark.sql.types import ArrayType, StringType
 from ast import literal_eval
 
 from pyspark.sql.functions import split, regexp_replace
+from pyspark.sql import functions as F
 
 
 # don't change this line
@@ -20,11 +21,12 @@ df = spark.read.option("header",True)\
     .option("inferSchema", True)\
     .csv("hdfs://%s:9000/assignment2/part1/input/" % (hdfs_nn))
 
-#
+
+
 # THE EMPTY REVIEWS HAVE A LENGTH OF 14
-df = df.filter(length('Reviews') > 14).filter(col("Rating") >= 1.0)
+df = df.filter(df["Reviews"] != "[ [  ], [  ] ]").filter( df["Rating"] >= 1.0)
 # The sanity check is done by checking the group by of the number of reviews 
-df.groupBy('Reviews').agg({'Reviews': 'count'}).sort(desc("count(Reviews)")).show()
+# df.groupBy('Reviews').agg({'Reviews': 'count'}).sort(desc("count(Reviews)")).show()
 
 df.write.csv("hdfs://%s:9000/assignment2/output/question1/" % (hdfs_nn), header=True)
 print("CSV Written")
